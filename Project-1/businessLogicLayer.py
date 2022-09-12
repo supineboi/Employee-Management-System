@@ -1,4 +1,4 @@
-import DbAccessL1
+import dbAccessLayer
 
 class Employee:
  """Here is Employee Table"""
@@ -15,19 +15,19 @@ class Employee:
  
  @staticmethod
  def getAllEmployee(num = -1):
-   employee = DbAccessL1.fetchAllEmployee(num)
+   employee = dbAccessLayer.fetchAllEmployee(num)
    return employee
 
  def insertEmployee(self):
-   insertFlag = DbAccessL1.insertRecord(self)
+   insertFlag = dbAccessLayer.insertRecord(self)
    return insertFlag
 
  @staticmethod
  def deleteEmployee(num):
-   desiredRow = DbAccessL1.deleteRecord(num)
+   desiredRow = dbAccessLayer.deleteRecord(num)
    return desiredRow
 
  @staticmethod
  def updateEmployee(x,y,z):
-   updateFlag = DbAccessL1.updateRecord(x,y,z)
+   updateFlag = dbAccessLayer.updateRecord(x,y,z)
    return updateFlag

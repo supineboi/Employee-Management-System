@@ -1,4 +1,4 @@
-import BLogicL1
+import dbAccessLayer
 import re
 
 #------------------------------------------------ IDENTITY FUNCTION -----------------------------------------<
@@ -24,7 +24,7 @@ def identity():
 def selectFunct():
 
 # Calling Static Method
-    data = BLogicL1.Employee.getAllEmployee()
+    data = dbAccessLayer.Employee.getAllEmployee()
     num = 1
     for row in data:
       print(f"Row {num}: ",row)
@@ -66,7 +66,7 @@ def insertFunct():
         aPattern = re.compile('^\w+$')
 
 # Creating Instance
-    insertInstance = BLogicL1.Employee(fName,mName,lName,designation,joinDate,salary,address_,city)
+    insertInstance = dbAccessLayer.Employee(fName,mName,lName,designation,joinDate,salary,address_,city)
     flagValue = insertInstance.insertEmployee()
     
     if flagValue == True:
@@ -83,7 +83,7 @@ def deleteFunct():
      num = int(input("Please Enter Employe Number: "))
 
      if num > 0:
-       row = BLogicL1.Employee.getAllEmployee(num)
+       row = dbAccessLayer.Employee.getAllEmployee(num)
        print(f"Employee Number {num} = ",row)
 
        print("\nConfirm to Delete :","YES or NO",sep="\n" )
@@ -92,7 +92,7 @@ def deleteFunct():
        action = action.lower()
 
        if action == 'yes':
-        flagValue = BLogicL1.Employee.deleteEmployee(num)
+        flagValue = dbAccessLayer.Employee.deleteEmployee(num)
         
         if flagValue == True:
           print("Deletion Completed :-)")
@@ -133,7 +133,7 @@ def updateFunct():
     changeCol = dictOfCol[action]
 
 # Calling Static Method
-    flagValue = BLogicL1.Employee.updateEmployee(changeCol,changeData,num)
+    flagValue = dbAccessLayer.Employee.updateEmployee(changeCol,changeData,num)
 
     if flagValue == True:
        print("Updation Completed! :-)")
