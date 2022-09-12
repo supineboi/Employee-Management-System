@@ -1,4 +1,4 @@
-import dbAccessLayer
+import businessLogicLayer
 import re
 
 #------------------------------------------------ IDENTITY FUNCTION -----------------------------------------<
@@ -24,7 +24,7 @@ def identity():
 def selectFunct():
 
 # Calling Static Method
-    data = dbAccessLayer.Employee.getAllEmployee()
+    data = businessLogicLayer.Employee.getAllEmployee()
     num = 1
     for row in data:
       print(f"Row {num}: ",row)
@@ -61,12 +61,9 @@ def insertFunct():
         print('ALL FIELDs are MANDATORY')
         print('******************************************************************')
         insertFunct()
-      
-      if k != 'Join Date' or k != 'Salary' or k != 'Address' or k != 'Designation' or k != 'City':
-        aPattern = re.compile('^\w+$')
 
 # Creating Instance
-    insertInstance = dbAccessLayer.Employee(fName,mName,lName,designation,joinDate,salary,address_,city)
+    insertInstance = businessLogicLayer.Employee(fName,mName,lName,designation,joinDate,salary,address_,city)
     flagValue = insertInstance.insertEmployee()
     
     if flagValue == True:
@@ -83,7 +80,7 @@ def deleteFunct():
      num = int(input("Please Enter Employe Number: "))
 
      if num > 0:
-       row = dbAccessLayer.Employee.getAllEmployee(num)
+       row = businessLogicLayer.Employee.getAllEmployee(num)
        print(f"Employee Number {num} = ",row)
 
        print("\nConfirm to Delete :","YES or NO",sep="\n" )
@@ -92,7 +89,7 @@ def deleteFunct():
        action = action.lower()
 
        if action == 'yes':
-        flagValue = dbAccessLayer.Employee.deleteEmployee(num)
+        flagValue = businessLogicLayer.Employee.deleteEmployee(num)
         
         if flagValue == True:
           print("Deletion Completed :-)")
@@ -133,7 +130,7 @@ def updateFunct():
     changeCol = dictOfCol[action]
 
 # Calling Static Method
-    flagValue = dbAccessLayer.Employee.updateEmployee(changeCol,changeData,num)
+    flagValue = businessLogicLayer.Employee.updateEmployee(changeCol,changeData,num)
 
     if flagValue == True:
        print("Updation Completed! :-)")
