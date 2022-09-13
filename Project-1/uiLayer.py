@@ -20,21 +20,6 @@ def identity():
   print("Access Denied!")
   return False
 
-#------------------------------------------------ SELECT FUNCTION -----------------------------------------<
-def selectFunct():
-
-# Calling Static Method
-    data = businessLogicLayer.Employee.getAllEmployee()
-    num = 1
-    for row in data:
-      print(f"Row {num}: ",row)
-      num +=1
-    else:
-      print("Completed! :-)")
-
-# Program Terminated  
-    exit("Program Terminated!")
-
 #------------------------------------------------ INSERT FUNCTION -----------------------------------------<
 def insertFunct():
 
@@ -57,10 +42,17 @@ def insertFunct():
         continue
 
       elif v == '':
-        print('******************************************************************')
+        print('*'*40)
         print('ALL FIELDs are MANDATORY')
-        print('******************************************************************')
-        insertFunct()
+        print('*'*40)
+        print("Insert Again ?", "yes[Y] or no[Any key]",sep="\n")
+        ans = input()
+        ans = ans.upper()
+
+        if ans == "Y":
+         insertFunct()
+        else:
+          options()
 
 # Creating Instance
     insertInstance = businessLogicLayer.Employee(fName,mName,lName,designation,joinDate,salary,address_,city)
@@ -72,7 +64,22 @@ def insertFunct():
       print("Insertion Not Completed! :-(")
 
 # Program Terminated  
-    exit("Program Terminated!")
+    options()
+
+#------------------------------------------------ SELECT FUNCTION -----------------------------------------<
+def selectFunct():
+
+# Calling Static Method
+    data = businessLogicLayer.Employee.getAllEmployee()
+    num = 1
+    for row in data:
+      print(f"Row {num}: ",row)
+      num +=1
+    else:
+      print("Completed! :-)")
+
+# Program Terminated  
+    options()
 
 #------------------------------------------------ DELETE FUNCTION -----------------------------------------<
 def deleteFunct():
@@ -96,14 +103,15 @@ def deleteFunct():
         else:
           print("Deletion Not Completed :-(")
         
-        exit("Program Terminated!")
+# Go back to options
+        options()
 
        elif action == 'no':
         print("Action Cancelled")
-        exit("Program Terminated!")
+        options()
        else:
         print("Unknown value Entered!")
-        exit("Program Terminated!")
+        deleteFunct()
 
 # Incorrect Keyword
      else:
@@ -111,14 +119,14 @@ def deleteFunct():
         print("Employee Number can't be negative!")
 # Program Terminated (3 try Only)  
        else:
-        exit("Program Terminated!")
+        options()
 
 #------------------------------------------------ UPDATE FUNCTION -----------------------------------------<
-def updateFunct():
-  
-  num = int(input("Please Enter the empNo you want to update :"))
+def updateFunct(num):
+
   print("Please Choose below options you want to update : ")
-  print("[1] for fName","[2] for mName","[3] for lName","[4] for designation","[5] for joinDate","[6] for salary","[7] for address_","[8] for city",sep="\n")
+  print("[1] for fName","[2] for mName","[3] for lName","[4] for designation","[5] for joinDate",\
+    "[6] for salary","[7] for address_","[8] for city","[9] for Main Menu", sep="\n")
   
   for i in range(3): 
    action = int(input())
@@ -137,8 +145,18 @@ def updateFunct():
     else:
        print("Updation Not Completed! :-(")
 
-# Program Terminated
-    exit("Program Terminated!")
+# Call the same function
+    print("Want to update more ?","yes[Y] or no[any key]",sep="\n")
+    ans = input()
+    ans = ans.upper()
+    if ans == "Y":
+     updateFunct(num)
+    else:
+      options()
+
+# Go Back to options
+   elif action == 9:
+     options()
 
 # Incorrect Keyword
    else:
@@ -146,9 +164,53 @@ def updateFunct():
      print("Please Enter the correct Number!")
 # Program Terminated (3 try Only)  
     else:
-     exit("Program Terminated!")
+     options()
 
-#------------------------------------------------- MAIN FUNCTION ------------------------------------------<
+#------------------------------------------------- OPTIONS FUNCTION ------------------------------------------<
+def options():
+  print("*"*44)
+  print("Kindly choose one option to move further : ")
+  print("1. [C] to Insert an Employee Record.")
+  print("2. [R] to Fetch All the Employee Records.")
+  print("3. [D] to Delete an Employee Record.")
+  print("4. [U] to Update an Employee Record.")
+  print("5. [O] to Logout.",end="\n\n")
+
+  for i in range(3):
+   action = input("")
+   action = action.upper()
+
+
+# Inserting Record of Employee
+   if action == "C":
+    insertFunct()
+
+# Fetching All Records of Employee
+   elif action == "R":
+    selectFunct()
+
+# Updating Record of Employee
+   elif action == "U":
+    num = int(input("Please Enter the empNo you want to update :"))
+    updateFunct(num)
+
+# Deleting Record of Employee
+   elif action == "D":
+    deleteFunct()
+
+# Logout User
+   elif action == "O":
+    exit("Program Terminated!")
+
+# Incorrect Keyword
+   else:
+    if i < 2:
+     print("Please Enter the correct Key!")
+# Program Terminated (3 try Only)  
+    else:
+     exit("Program Terminated!")
+     
+#------------------------------------------------- MAIN-1 FUNCTION ------------------------------------------<
 def main():
  print("""
        ***************************************** WELCOME TO THE *****************************************
@@ -166,40 +228,7 @@ def main():
 
 # User is an Employee
  else:
-  print("Kindly choose one option to move further : ")
-  print("1. [F] to Fetch All the Employee Records.")
-  print("2. [I] to Insert an Employee Record.")
-  print("3. [D] to Delete an Employee Record.")
-  print("4. [U] to Update an Employee Record.",end="\n\n")
-
-  for i in range(3):
-   action = input("")
-   action = action.upper()
-
-# Fetching All Records of Employee
-   if action == "F":
-    selectFunct()
-
-# Inserting Record of Employee
-   elif action == "I":
-    insertFunct()
-
-# Deleting Record of Employee
-   elif action == "D":
-    deleteFunct()
-
-# Updating Record of Employee
-   elif action == "U":
-    updateFunct()
-
-# Incorrect Keyword
-   else:
-    if i < 2:
-     print("Please Enter the correct Key!")
-# Program Terminated (3 try Only)  
-    else:
-     exit("Program Terminated!")
-
+  options()
 
 #------------------------------------------- PROGRAM START FROM HERE ------------------------------------------<
 main()
